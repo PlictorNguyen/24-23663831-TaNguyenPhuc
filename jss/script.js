@@ -15,7 +15,7 @@ $(document).ready(function() {
         let products = JSON.parse(localStorage.getItem('products')) || [];
         products = products.map(product => ({
             ...product,
-            description: product.description || 'Sản phẩm chất lượng cao từ Nhạc Cụ Minh Phụng.',
+            description: product.description || 'Sản phẩm chất lượng cao từ Nhạc Cụ Nguyên Phúc.',
             image: product.image ? product.image.replace('assets/', 'img/') : 'img/piano.jpg' // Chuyển assets/ thành img/
         }));
         localStorage.setItem('products', JSON.stringify(products));
