@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sitemap - Nhạc Cụ Nguyên Phúc">
+    <title>Sitemap - Nhạc Cụ Nguyên Phúc</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --primary: #d8232a;
+            --primary-hover: #b51d23;
+            --secondary: #333;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--secondary);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+        
+        .sitemap-list ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        .sitemap-list ul li {
+            margin-bottom: 10px;
+        }
+        
+        .sitemap-list ul li a {
+            color: var(--primary);
+        }
+        
+        .sitemap-list ul li a:hover {
+            color: var(--primary-hover);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logo.jpg" alt="Logo" width="50"> Nhạc Cụ Nguyên Phúc
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang Chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản Phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">Tin Tức</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Giới Thiệu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Liên Hệ</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">Giỏ Hàng <span class="badge bg-primary" id="cartCount">0</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h1>Sitemap - Nhạc Cụ Nguyên Phúc</h1>
+        <p>Khám phá cấu trúc website của chúng tôi để dễ dàng tìm kiếm thông tin.</p>
+
+        <div class="row">
+            <div class="col-md-6 sitemap-list">
+                <h3>Cấu Trúc Website</h3>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a>
+                        <ul>
+                            <li><a href="index.html#carouselItems">Banner Sản Phẩm</a></li>
+                            <li><a href="index.html#featuredProducts">Sản Phẩm Nổi Bật</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="products.html">Sản Phẩm</a>
+                        <ul>
+                            <li><a href="products.html">Danh Sách Sản Phẩm</a></li>
+                            <li><a href="product-detail.html?id=1">Chi Tiết Sản Phẩm</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="cart.html">Giỏ Hàng</a></li>
+                    <li><a href="news.html">Tin Tức</a>
+                        <ul>
+                            <li><a href="news.html">Danh Sách Tin Tức</a></li>
+                            <li><a href="news-detail.html?id=1">Chi Tiết Tin Tức</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="about.html">Giới Thiệu</a></li>
+                    <li><a href="contact.html">Liên Hệ</a></li>
+                    <li><a href="sitemap.html">Sitemap</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Sản Phẩm Nổi Bật</h3>
+                <div class="row" id="featuredProducts"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Nhạc Cụ Nguyên Phúc</h5>
+                    <p>Cung cấp nhạc cụ chất lượng cao và dịch vụ tận tâm.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liên Kết Nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="sitemap.html" class="text-white">Sitemap</a></li>
+                        <li><a href="products.html" class="text-white">Sản Phẩm</a></li>
+                        <li><a href="news.html" class="text-white">Tin Tức</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liên Hệ</h5>
+                    <p>Email: contact@nhaccunguyenphuc.com</p>
+                    <p>Hotline: 0909 123 456</p>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <p>© 2025 Nhạc Cụ Nguyên Phúc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../jss/jquery.min.js"></script>
+    <script src="../jss/bootstrap.min.js"></script>
+    <script src="../jss/script.js"></script>
+</body>
+
+</html>
