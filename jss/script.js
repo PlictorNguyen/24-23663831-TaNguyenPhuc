@@ -229,25 +229,65 @@ $(document).ready(function() {
     // Xử lý form đăng ký
     $('#registerForm').submit(function(e) {
         e.preventDefault();
-        const username = $('#username').val();
-        const email = $('#email').val();
+        const fullname = $('#fullname').val().trim();
+        const birthdate = $('#birthdate').val();
+        const username = $('#username').val().trim();
+        const email = $('#email').val().trim();
         const password = $('#password').val();
         const confirmPassword = $('#confirmPassword').val();
+
+        // Kiểm tra Họ và tên
+        const fullnameRegex = /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*( [A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)+$/;
+        if (!fullnameRegex.test(fullname)) {
+            $('#registerMessage').html('<div class="alert alert-danger">Họ và tên phải có ít nhất 2 từ, mỗi từ bắt đầu bằng chữ hoa!</div>');
+            return;
+        }
+
+        // Kiểm tra Ngày sinh
+        if (!birthdate) {
+            $('#registerMessage').html('<div class="alert alert-danger">Vui lòng nhập ngày sinh!</div>');
+            return;
+        }
+        const today = new Date('2025-05-08');
+        const birth = new Date(birthdate);
+        const age = today.getFullYear() - birth.getFullYear();
+        const monthDiff = today.getMonth() - birth.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+            age--;
+        }
+        if (age < 13) {
+            $('#registerMessage').html('<div class="alert alert-danger">Bạn phải từ 13 tuổi trở lên để đăng ký!</div>');
+            return;
+        }
+
+        // Kiểm tra Tên đăng nhập
+        const usernameRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
+        if (!usernameRegex.test(username)) {
+            $('#registerMessage').html('<div class="alert alert-danger">Tên đăng nhập phải chứa cả chữ cái và số!</div>');
+            return;
+        }
+
+        // Kiểm tra Mật khẩu
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            $('#registerMessage').html('<div class="alert alert-danger">Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt!</div>');
+            return;
+        }
 
         if (password !== confirmPassword) {
             $('#registerMessage').html('<div class="alert alert-danger">Mật khẩu không khớp!</div>');
             return;
         }
 
-        const users = JSON.parse(localStorage.getItem('users'));
+        const users = JSON.parse(localStorage.getItem('users')) || [];
         if (users.find(user => user.username === username)) {
             $('#registerMessage').html('<div class="alert alert-danger">Tên đăng nhập đã tồn tại!</div>');
             return;
         }
 
-        users.push({ username, email, password });
+        users.push({ fullname, birthdate, username, email, password });
         localStorage.setItem('users', JSON.stringify(users));
-        $('#registerMessage').html('<div class="alert alert-success">Đăng ký thành công! Thông tin: ' + username + ', ' + email + '</div>');
+        $('#registerMessage').html(`<div class="alert alert-success">Đăng ký thành công! Thông tin: ${fullname}, ${username}, ${email}</div>`);
         $('#registerForm')[0].reset();
     });
 
