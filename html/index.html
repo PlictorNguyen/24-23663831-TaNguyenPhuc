@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Nhạc Cụ Nguyên Phúc - Cửa hàng nhạc cụ trực tuyến">
-    <title>Nhạc Cụ Nguyên Phúc - Trang Chủ</title>
+    <meta name="description" content="Trang Chủ - Nhạc Cụ Nguyên Phúc">
+    <title>Trang Chủ - Nhạc Cụ Nguyên Phúc</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <!-- Font Awesome -->
@@ -38,48 +38,49 @@
         }
         
         .hero-slider {
-            height: 500px;
             background-size: cover;
             background-position: center;
-            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         .hero-content {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .ad-banner {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ad-banner img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .ad-banner .ad-content {
             position: absolute;
-            bottom: 50px;
-            left: 50px;
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 5px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            text-align: center;
         }
         
-        .hero-content h1 {
-            font-size: 36px;
-            margin-bottom: 15px;
-        }
-        
-        .hero-content p {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-        
-        @media (max-width: 768px) {
-            .hero-slider {
-                height: 300px;
-            }
-            .hero-content {
-                left: 20px;
-                right: 20px;
-                max-width: none;
-                padding: 20px;
-            }
-            .hero-content h1 {
-                font-size: 24px;
-            }
-            .hero-content p {
-                font-size: 16px;
-            }
+        .ad-banner .btn {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -100,6 +101,8 @@
                     <li class="nav-item"><a class="nav-link" href="news.html">Tin Tức</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">Giới Thiệu</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Liên Hệ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="register.html">Đăng Ký</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Đăng Nhập</a></li>
                     <li class="nav-item">
                         <a class="nav-link" href="cart.html">Giỏ Hàng <span class="badge bg-primary" id="cartCount">0</span></a>
                     </li>
@@ -107,8 +110,6 @@
             </div>
         </div>
     </nav>
-
-    <!-- Hero Slider -->
     <div id="mainSlider" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner" id="carouselItems"></div>
         <button class="carousel-control-prev" type="button" data-bs-target="#mainSlider" data-bs-slide="prev">
@@ -133,6 +134,42 @@
         <div class="row" id="featuredProducts"></div>
     </div>
 
+    <div class="container my-5">
+        <h2>Khuyến Mãi Hấp Dẫn</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="ad-banner">
+                    <img src="../img/guitar-yamaha.jpg" alt="Đàn Guitar Yamaha">
+                    <div class="ad-content">
+                        <h5>Đàn Guitar Yamaha</h5>
+                        <p>Chất lượng đỉnh cao, chỉ 3,000,000 VNĐ!</p>
+                        <a href="product-detail.html?id=1" class="btn btn-primary">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="ad-banner">
+                    <img src="../img/piano-casio.jpg" alt="Đàn Piano Casio">
+                    <div class="ad-content">
+                        <h5>Đàn Piano Casio</h5>
+                        <p>Âm thanh chân thực, giá 8,500,000 VNĐ!</p>
+                        <a href="product-detail.html?id=2" class="btn btn-primary">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="ad-banner">
+                    <img src="../img/organ-yamaha.jpg" alt="Khuyến Mãi DISCOUNT10">
+                    <div class="ad-content">
+                        <h5>Ưu đãi 10%</h5>
+                        <p>Áp dụng mã DISCOUNT10 khi mua sắm!</p>
+                        <a href="products.html" class="btn btn-primary">Áp dụng ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-dark text-white py-4">
         <div class="container">
             <div class="row">
@@ -155,10 +192,11 @@
                 </div>
             </div>
             <div class="text-center mt-3">
-                <p>© 2025 Nhạc Cụ Nguyên Phúc. All rights reserved.</p>
+                <p>© 2025 Nhạc Cụ Nguyên Phúc. Mọi quyền được bảo lưu.</p>
             </div>
         </div>
     </footer>
+
     <script src="../jss/jquery.min.js"></script>
     <script src="../jss/bootstrap.min.js"></script>
     <script src="../jss/script.js"></script>
