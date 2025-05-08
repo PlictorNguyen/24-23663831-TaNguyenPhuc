@@ -60,7 +60,7 @@ $(document).ready(function() {
         carouselItems.empty();
         products.forEach((product, index) => {
             const activeClass = index === 0 ? 'active' : '';
-            const description = product.description || 'Sản phẩm chất lượng cao từ Nhạc Cụ Minh Phụng.';
+            const description = product.description || 'Sản phẩm chất lượng cao từ Nhạc Cụ Nguyên Phúc.';
             carouselItems.append(`
         <div class="carousel-item ${activeClass} hero-slider" style="background-image: url('${product.image}');">
           <div class="hero-content">
@@ -229,6 +229,11 @@ $(document).ready(function() {
     // Xử lý form đăng ký
     $('#registerForm').submit(function(e) {
         e.preventDefault();
+        const form = $(this);
+        form.addClass('was-validated');
+
+        $('#fullnameError, #birthdateError, #usernameError, #emailError, #passwordError, #confirmPasswordError').text('');
+
         const fullname = $('#fullname').val().trim();
         const birthdate = $('#birthdate').val();
         const username = $('#username').val().trim();
@@ -236,59 +241,110 @@ $(document).ready(function() {
         const password = $('#password').val();
         const confirmPassword = $('#confirmPassword').val();
 
-        // Kiểm tra Họ và tên
-        const fullnameRegex = /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*( [A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)+$/;
-        if (!fullnameRegex.test(fullname)) {
-            $('#registerMessage').html('<div class="alert alert-danger">Họ và tên phải có ít nhất 2 từ, mỗi từ bắt đầu bằng chữ hoa!</div>');
+        let isValid = true;
+        let firstErrorField = null;
+        let users = [];
+        try {
+            users = JSON.parse(localStorage.getItem('users')) || [];
+        } catch (e) {
+            console.error('Error parsing users:', e);
+            $('#registerMessage').html('<div class="alert alert-danger">Lỗi hệ thống: Không thể truy cập dữ liệu người dùng. Vui lòng thử lại sau!</div>');
             return;
         }
 
-        // Kiểm tra Ngày sinh
-        if (!birthdate) {
-            $('#registerMessage').html('<div class="alert alert-danger">Vui lòng nhập ngày sinh!</div>');
-            return;
+        // Kiểm tra Họ và tên
+        const fullnameRegex = /^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*( [A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*)+$/;
+        if (!fullname) {
+            $('#fullnameError').text('Vui lòng nhập họ và tên!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#fullname';
+        } else if (!fullnameRegex.test(fullname)) {
+            $('#fullnameError').text('Họ và tên phải có ít nhất 2 từ, mỗi từ bắt đầu bằng chữ hoa!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#fullname';
         }
-        const today = new Date('2025-05-08');
+
+        // Kiểm tra Ngày sinh
+        const today = new Date();
         const birth = new Date(birthdate);
-        const age = today.getFullYear() - birth.getFullYear();
+        let age = today.getFullYear() - birth.getFullYear();
         const monthDiff = today.getMonth() - birth.getMonth();
         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
             age--;
         }
-        if (age < 13) {
-            $('#registerMessage').html('<div class="alert alert-danger">Bạn phải từ 13 tuổi trở lên để đăng ký!</div>');
-            return;
+        if (age < 13 || age > 100) {
+            $('#birthdateError').text('Tuổi phải từ 13 đến 100 để đăng ký!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#birthdate';
         }
+
 
         // Kiểm tra Tên đăng nhập
         const usernameRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
-        if (!usernameRegex.test(username)) {
-            $('#registerMessage').html('<div class="alert alert-danger">Tên đăng nhập phải chứa cả chữ cái và số!</div>');
-            return;
+        if (!username) {
+            $('#usernameError').text('Vui lòng nhập tên đăng nhập!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#username';
+        } else if (!usernameRegex.test(username)) {
+            $('#usernameError').text('Tên đăng nhập phải chứa cả chữ cái và số!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#username';
+        } else if (users.find(user => user.username === username)) {
+            $('#usernameError').text('Tên đăng nhập đã tồn tại!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#username';
+        }
+
+        // Kiểm tra Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email) {
+            $('#emailError').text('Vui lòng nhập email!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#email';
+        } else if (!emailRegex.test(email)) {
+            $('#emailError').text('Email không hợp lệ!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#email';
         }
 
         // Kiểm tra Mật khẩu
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!passwordRegex.test(password)) {
-            $('#registerMessage').html('<div class="alert alert-danger">Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt!</div>');
-            return;
+        if (!password) {
+            $('#passwordError').text('Vui lòng nhập mật khẩu!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#password';
+        } else if (!passwordRegex.test(password)) {
+            $('#passwordError').text('Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#password';
         }
 
-        if (password !== confirmPassword) {
-            $('#registerMessage').html('<div class="alert alert-danger">Mật khẩu không khớp!</div>');
-            return;
+        // Kiểm tra Xác nhận mật khẩu
+        if (!confirmPassword) {
+            $('#confirmPasswordError').text('Vui lòng xác nhận mật khẩu!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#confirmPassword';
+        } else if (password !== confirmPassword) {
+            $('#confirmPasswordError').text('Mật khẩu không khớp!');
+            isValid = false;
+            if (!firstErrorField) firstErrorField = '#confirmPassword';
         }
 
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        if (users.find(user => user.username === username)) {
-            $('#registerMessage').html('<div class="alert alert-danger">Tên đăng nhập đã tồn tại!</div>');
-            return;
+        // Focus vào trường lỗi đầu tiên
+        if (firstErrorField) {
+            $(firstErrorField).focus();
         }
 
-        users.push({ fullname, birthdate, username, email, password });
-        localStorage.setItem('users', JSON.stringify(users));
-        $('#registerMessage').html(`<div class="alert alert-success">Đăng ký thành công! Thông tin: ${fullname}, ${username}, ${email}</div>`);
-        $('#registerForm')[0].reset();
+        // Nếu tất cả hợp lệ, lưu tài khoản
+        if (isValid) {
+            users.push({ fullname, birthdate, username, email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            $('#registerMessage').html(`<div class="alert alert-success">Đăng ký thành công! Thông tin: ${fullname}, ${username}, ${email}</div>`);
+            form.removeClass('was-validated');
+            form[0].reset();
+        } else {
+            form.removeClass('was-validated'); // Xóa was-validated nếu sai
+        }
     });
 
     // Xử lý form đăng nhập
@@ -296,7 +352,12 @@ $(document).ready(function() {
         e.preventDefault();
         const username = $('#username').val();
         const password = $('#password').val();
-        const users = JSON.parse(localStorage.getItem('users'));
+        let users = [];
+        try {
+            users = JSON.parse(localStorage.getItem('users'));
+        } catch (e) {
+            console.error('Error parsing users:', e);
+        }
 
         const user = users.find(user => user.username === username && user.password === password);
         if (user) {
