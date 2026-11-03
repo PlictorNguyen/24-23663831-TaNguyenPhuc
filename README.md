@@ -26,7 +26,7 @@ A multi-page front-end storefront built as a university web development project.
 
 ## Run locally
 
-Open `html/index.html` in a browser. This is a front-end course project; checkout and account pages are interface demonstrations and do not process real orders or accounts.
+Open `html/index.html` in a browser to view the site.
 
 ---
 
