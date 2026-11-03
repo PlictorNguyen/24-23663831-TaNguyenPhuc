@@ -1,6 +1,6 @@
 # E-commerce Storefront
 
-A multi-page front-end storefront built as a university web development project. The repository organizes the interface into separate pages and shared CSS, JavaScript, and image assets.
+A multi-page front-end storefront created as a web development project. The repository organizes the interface into separate pages and shared CSS, JavaScript, and image assets.
 
 ## What’s included
 
@@ -32,6 +32,6 @@ Open `html/index.html` in a browser to view the site.
 
 # Website bán hàng
 
-Đồ án giao diện web bán hàng nhiều trang, xây dựng bằng HTML, CSS và JavaScript. Dự án gồm trang chủ, danh mục và chi tiết sản phẩm, giỏ hàng, thanh toán, đăng nhập, đăng ký, giới thiệu, liên hệ, tin tức và sơ đồ trang.
+Dự án giao diện web bán hàng nhiều trang, gồm trang chủ, danh mục và chi tiết sản phẩm, giỏ hàng, thanh toán, đăng nhập, đăng ký, giới thiệu, liên hệ, tin tức và sơ đồ trang. Các trang được xây dựng bằng HTML, CSS và JavaScript.
 
 Mở `html/index.html` bằng trình duyệt để xem giao diện.
